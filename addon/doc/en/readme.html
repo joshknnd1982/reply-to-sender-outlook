@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Reply to Sender for Microsoft Outlook</title>
+</head>
+<body>
+<h1>Reply to Sender for Microsoft Outlook</h1>
+<ul>
+<li>Author: Josh Kennedy</li>
+<li>Version: 0.1</li>
+<li>Compatibility: NVDA 2024.1 through 2026.1</li>
+</ul>
+<h2>Overview</h2>
+<p>This add-on adds one command to NVDA inside Microsoft Outlook:
+<strong>NVDA+shift+r</strong> (works with either the insert or caps lock NVDA
+modifier key). It replies directly, and only, to the original sender of the
+message you are reading.</p>
+<p>The add-on is implemented as an Outlook app module, so it is only active
+while Microsoft Outlook is running and focused. When you close Outlook with
+the close button or alt+f4, NVDA unloads the add-on automatically.</p>
+<h2>What the command does</h2>
+<ol>
+<li>Ensures the current Outlook window is maximized.</li>
+<li>Reads the From field of the current message and copies the sender's
+email address to the clipboard.</li>
+<li>Invokes Outlook's reply command and waits for the reply window to gain
+focus (the reply window is also maximized).</li>
+<li>Erases whatever Outlook put in the To field and fills it with only the
+original sender's email address, guaranteeing the reply goes to the sender
+alone.</li>
+<li>Moves focus to the very top of the message body and announces
+"message body, begin typing."</li>
+</ol>
+<h2>Usage</h2>
+<p>Open a message, or select one in the message list, then press
+<strong>NVDA+shift+r</strong>. When you hear "message body, begin typing,"
+just type your reply and send it as usual (control+enter or alt+s).</p>
+<h2>Notes</h2>
+<ul>
+<li>The command works on mail messages. For items that cannot be replied to,
+NVDA announces that no reply is possible.</li>
+<li>For Exchange and Microsoft 365 accounts, the add-on resolves the
+sender's real SMTP address rather than the internal Exchange address.</li>
+<li>The gesture can be reassigned in NVDA menu &gt; Preferences &gt; Input
+gestures, under the "Reply to Sender for Outlook" category (while Outlook is
+focused).</li>
+</ul>
+</body>
+</html>
