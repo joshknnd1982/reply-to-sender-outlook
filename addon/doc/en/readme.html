@@ -8,8 +8,9 @@
 <h1>Reply to Sender for Microsoft Outlook</h1>
 <ul>
 <li>Author: Josh Kennedy</li>
-<li>Version: 0.1</li>
+<li>Version: 0.2</li>
 <li>Compatibility: NVDA 2024.1 through 2026.1</li>
+<li>Tested with: Microsoft Outlook 2024 (classic Outlook)</li>
 </ul>
 <h2>Overview</h2>
 <p>This add-on adds one command to NVDA inside Microsoft Outlook:
@@ -36,12 +37,21 @@ alone.</li>
 <p>Open a message, or select one in the message list, then press
 <strong>NVDA+shift+r</strong>. When you hear "message body, begin typing,"
 just type your reply and send it as usual (control+enter or alt+s).</p>
+<h2>Checking the detected sender</h2>
+<p>Press <strong>NVDA+shift+e</strong> to hear the email address the add-on
+detects for the current message's sender, without replying to it. This is
+useful for confirming the add-on reads the From field correctly.</p>
 <h2>Notes</h2>
 <ul>
+<li>This add-on requires classic Outlook (Outlook 2024, 2021, 2019 or
+Microsoft 365 desktop). The new Outlook for Windows is not supported,
+because it provides no COM automation interface.</li>
 <li>The command works on mail messages. For items that cannot be replied to,
 NVDA announces that no reply is possible.</li>
 <li>For Exchange and Microsoft 365 accounts, the add-on resolves the
 sender's real SMTP address rather than the internal Exchange address.</li>
+<li>CC and BCC are cleared along with the To field, so the reply cannot
+reach anyone but the original sender.</li>
 <li>The gesture can be reassigned in NVDA menu &gt; Preferences &gt; Input
 gestures, under the "Reply to Sender for Outlook" category (while Outlook is
 focused).</li>
