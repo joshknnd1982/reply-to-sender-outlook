@@ -8,7 +8,7 @@
 <h1>Reply to Sender for Microsoft Outlook</h1>
 <ul>
 <li>Author: Josh Kennedy</li>
-<li>Version: 0.3</li>
+<li>Version: 0.4</li>
 <li>Compatibility: NVDA 2024.1 through 2026.1</li>
 <li>Tested with: Microsoft Outlook 2024 (classic Outlook)</li>
 </ul>
@@ -17,11 +17,13 @@
 <strong>NVDA+shift+r</strong> (works with either the insert or caps lock NVDA
 modifier key). It replies directly, and only, to the original sender of the
 message you are reading.</p>
-<p>The add-on is implemented as an Outlook app module, so it is only active
-while Microsoft Outlook is running and focused. When you close Outlook with
-the close button or alt+f4, NVDA unloads the add-on automatically. Its one
-global plugin only checks for updates, so that it can do so while Outlook is
-closed.</p>
+<p>The add-on's keys only work while classic Outlook has focus. Everywhere
+else, NVDA and other add-ons get them. Outside Outlook the add-on only checks
+for updates.</p>
+<p>The add-on works alongside other Outlook add-ons, such as Outlook Extended.
+Version 0.3 and earlier stopped Outlook Extended's commands, such as Alt+1
+through Alt+0 for a message's header fields, from working; version 0.4 fixes
+that.</p>
 <h2>What the command does</h2>
 <ol>
 <li>Ensures the current Outlook window is maximized.</li>
@@ -55,8 +57,7 @@ sender's real SMTP address rather than the internal Exchange address.</li>
 <li>CC and BCC are cleared along with the To field, so the reply cannot
 reach anyone but the original sender.</li>
 <li>The gesture can be reassigned in NVDA menu &gt; Preferences &gt; Input
-gestures, under the "Reply to Sender for Outlook" category (while Outlook is
-focused).</li>
+gestures, under the "Reply to Sender for Outlook" category.</li>
 </ul>
 <h2>Updates</h2>
 <p>The add-on checks for updates. Once a day, a little after NVDA starts, the add-on asks its GitHub repository, <a href="https://github.com/joshknnd1982/reply-to-sender-outlook">github.com/joshknnd1982/reply-to-sender-outlook</a>, whether a newer version has been released, and says nothing unless there is one. When there is, a dialog shows what's new in a box you can read line by line, and offers to download and install it. The download must match the release's SHA-256 checksum. Then NVDA asks you to confirm the installation and offers to restart. Your settings are kept.</p>

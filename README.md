@@ -5,7 +5,7 @@ directly — and only — to the original sender of the message you are reading
 in Microsoft Outlook.
 
 * Author: Josh Kennedy
-* Version: 0.3
+* Version: 0.4
 * Compatibility: NVDA 2024.1 through 2026.1
 * Requires classic Outlook (Outlook 2024, 2021, 2019 or Microsoft 365
   desktop). The new Outlook for Windows is not supported — it exposes no COM
@@ -63,11 +63,17 @@ accepted, since it is not a usable address.
 
 ## Scope
 
-The add-on is implemented as an Outlook app module, so NVDA only runs it
-while Microsoft Outlook is the focused application. When Outlook closes
-(close button, alt+f4), NVDA unloads the add-on automatically. It adds no
-global keyboard hooks and does nothing else outside Outlook: its one global
-plugin only checks for updates, so that it can do so while Outlook is closed.
+NVDA+shift+r and NVDA+shift+e belong to the add-on only while classic Outlook
+has focus. Everywhere else NVDA and other add-ons get those keys. The add-on
+adds no keyboard hooks, and outside Outlook it only checks for updates.
+
+The add-on works alongside other Outlook add-ons, such as Outlook Extended.
+NVDA runs only one app module for a program, so an add-on that brings its own
+Outlook app module switches off every other add-on's. Up to 0.3 this add-on
+did that: installing it stopped Outlook Extended's commands, such as Alt+1
+through Alt+0 for a message's header fields, from working. Since 0.4 it has no
+app module, and its global plugin works with whichever Outlook app module NVDA
+runs, NVDA's own or an add-on's.
 
 ## Updates
 
@@ -90,35 +96,45 @@ Requires Python 3. From the repository root:
 python build.py
 ```
 
-This produces `replyToSenderOutlook-0.3.nvda-addon` and its `.sha256` checksum
+This produces `replyToSenderOutlook-0.4.nvda-addon` and its `.sha256` checksum
 file in the repository root. Upload both to the GitHub release: the update check
-reads the release's tag, such as `v0.3`, and checks the download against the
+reads the release's tag, such as `v0.4`, and checks the download against the
 checksum.
+
+To run the tests, which need only Python 3:
+
+```bash
+python -m unittest discover -s tests
+```
 
 ## Repository layout
 
 ```
 addon/
   manifest.ini          Add-on metadata (name, version, NVDA compatibility)
-  appModules/
-    outlook.py          The Outlook app module with the NVDA+shift+r script
   globalPlugins/
     replyToSenderOutlook/
-      __init__.py       Starts the update check, which must work outside Outlook
+      __init__.py       The NVDA+shift+r and NVDA+shift+e commands, active only
+                        in Outlook, and the update check
+      outlookReply.py   Finds the sender and replies through Outlook's object model
       updater.py        The GitHub update check, shared by all of joshknnd1982's
                         add-ons; keep it identical
   doc/
     en/
       readme.html       User documentation bundled with the add-on
 build.py                Builds the .nvda-addon package
+tests/                  python -m unittest discover -s tests
 ```
 
 ## Notes for developers
 
-The app module subclasses NVDA's built-in Outlook app module
-(`nvdaBuiltin.appModules.outlook`), so all of NVDA's standard Outlook
-support keeps working. The sender address and the reply are obtained through
-Outlook's COM object model (`nativeOm`), which is more reliable than
+Don't add an `appModules/outlook.py` or `appModules/outlook` package: NVDA
+imports the first one on its `appModules` path, so it would replace NVDA's
+own Outlook support or another add-on's, such as Outlook Extended. The global
+plugin takes Outlook's COM object model (`nativeOm`) from whichever Outlook
+app module NVDA is running for the focused window. NVDA's own provides it,
+and Outlook Extended's builds on NVDA's. The sender address and the reply are
+obtained through that object model, which is more reliable than
 scraping the visible From field; the reply window and message body are then
 tracked through window events so focus lands at the top of the body.
 
@@ -130,6 +146,16 @@ escape and abort the script — that was the cause of the sender lookup
 failing in 0.1.
 
 ## Changelog
+
+### 0.4
+
+* Works alongside Outlook Extended and other add-ons for Outlook. Up to 0.3
+  the add-on's Outlook commands were an Outlook app module. NVDA runs only one
+  app module for a program, so installing this add-on switched off Outlook
+  Extended's, and its commands, such as Alt+1 through Alt+0 to read a
+  message's header fields, stopped working. The add-on no longer has an app
+  module. NVDA+shift+r and NVDA+shift+e still work only while classic Outlook
+  has focus, and message windows are still maximized when they open.
 
 ### 0.3
 
