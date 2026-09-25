@@ -10,8 +10,9 @@ Adds NVDA+shift+r: reply only to the original sender of the current message.
 
 Because this is an app module, NVDA only runs this code while Microsoft
 Outlook is the foreground application, and NVDA unloads it automatically
-when Outlook exits (close button, alt+f4, etc.).  No global plugin is used,
-so nothing from this add-on remains active outside of Outlook.
+when Outlook exits (close button, alt+f4, etc.).  The add-on's only global
+plugin, globalPlugins/replyToSenderOutlook, checks GitHub for updates and does
+nothing else, so none of the Outlook behavior below is active outside Outlook.
 
 The script:
 1. Ensures the current Outlook window is maximized.

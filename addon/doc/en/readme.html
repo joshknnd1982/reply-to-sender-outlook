@@ -8,7 +8,7 @@
 <h1>Reply to Sender for Microsoft Outlook</h1>
 <ul>
 <li>Author: Josh Kennedy</li>
-<li>Version: 0.2</li>
+<li>Version: 0.3</li>
 <li>Compatibility: NVDA 2024.1 through 2026.1</li>
 <li>Tested with: Microsoft Outlook 2024 (classic Outlook)</li>
 </ul>
@@ -19,7 +19,9 @@ modifier key). It replies directly, and only, to the original sender of the
 message you are reading.</p>
 <p>The add-on is implemented as an Outlook app module, so it is only active
 while Microsoft Outlook is running and focused. When you close Outlook with
-the close button or alt+f4, NVDA unloads the add-on automatically.</p>
+the close button or alt+f4, NVDA unloads the add-on automatically. Its one
+global plugin only checks for updates, so that it can do so while Outlook is
+closed.</p>
 <h2>What the command does</h2>
 <ol>
 <li>Ensures the current Outlook window is maximized.</li>
@@ -56,5 +58,8 @@ reach anyone but the original sender.</li>
 gestures, under the "Reply to Sender for Outlook" category (while Outlook is
 focused).</li>
 </ul>
+<h2>Updates</h2>
+<p>The add-on checks for updates. Once a day, a little after NVDA starts, the add-on asks its GitHub repository, <a href="https://github.com/joshknnd1982/reply-to-sender-outlook">github.com/joshknnd1982/reply-to-sender-outlook</a>, whether a newer version has been released, and says nothing unless there is one. When there is, a dialog shows what's new in a box you can read line by line, and offers to download and install it. The download must match the release's SHA-256 checksum. Then NVDA asks you to confirm the installation and offers to restart. Your settings are kept.</p>
+<p>To check yourself, open the NVDA menu, choose <strong>Tools</strong>, then <strong>Check for add-on updates</strong>, and choose <strong>Reply to Sender for Microsoft Outlook...</strong>. Or press <strong>Check for updates now</strong> in the add-on's settings: NVDA menu, Preferences, Settings, <strong>Reply to Sender for Microsoft Outlook</strong>. You can also assign a gesture to <strong>Checks for Reply to Sender for Microsoft Outlook updates</strong> in NVDA's Input Gestures dialog, under <strong>Reply to Sender for Outlook</strong>. To stop the daily check, clear <strong>Check for Reply to Sender for Microsoft Outlook updates automatically</strong> in the same settings panel.</p>
 </body>
 </html>

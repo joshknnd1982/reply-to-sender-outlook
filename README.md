@@ -5,7 +5,7 @@ directly — and only — to the original sender of the message you are reading
 in Microsoft Outlook.
 
 * Author: Josh Kennedy
-* Version: 0.2
+* Version: 0.3
 * Compatibility: NVDA 2024.1 through 2026.1
 * Requires classic Outlook (Outlook 2024, 2021, 2019 or Microsoft 365
   desktop). The new Outlook for Windows is not supported — it exposes no COM
@@ -66,7 +66,14 @@ accepted, since it is not a usable address.
 The add-on is implemented as an Outlook app module, so NVDA only runs it
 while Microsoft Outlook is the focused application. When Outlook closes
 (close button, alt+f4), NVDA unloads the add-on automatically. It adds no
-global keyboard hooks and does nothing outside Outlook.
+global keyboard hooks and does nothing else outside Outlook: its one global
+plugin only checks for updates, so that it can do so while Outlook is closed.
+
+## Updates
+
+The add-on checks for updates. Once a day, a little after NVDA starts, the add-on asks its GitHub repository, [github.com/joshknnd1982/reply-to-sender-outlook](https://github.com/joshknnd1982/reply-to-sender-outlook), whether a newer version has been released, and says nothing unless there is one. When there is, a dialog shows what's new in a box you can read line by line, and offers to download and install it. The download must match the release's SHA-256 checksum. Then NVDA asks you to confirm the installation and offers to restart. Your settings are kept.
+
+To check yourself, open the NVDA menu, choose **Tools**, then **Check for add-on updates**, and choose **Reply to Sender for Microsoft Outlook...**. Or press **Check for updates now** in the add-on's settings: NVDA menu, Preferences, Settings, **Reply to Sender for Microsoft Outlook**. You can also assign a gesture to **Checks for Reply to Sender for Microsoft Outlook updates** in NVDA's Input Gestures dialog, under **Reply to Sender for Outlook**. To stop the daily check, clear **Check for Reply to Sender for Microsoft Outlook updates automatically** in the same settings panel.
 
 ## Installation
 
@@ -83,7 +90,10 @@ Requires Python 3. From the repository root:
 python build.py
 ```
 
-This produces `replyToSenderOutlook-0.2.nvda-addon` in the repository root.
+This produces `replyToSenderOutlook-0.3.nvda-addon` and its `.sha256` checksum
+file in the repository root. Upload both to the GitHub release: the update check
+reads the release's tag, such as `v0.3`, and checks the download against the
+checksum.
 
 ## Repository layout
 
@@ -92,6 +102,11 @@ addon/
   manifest.ini          Add-on metadata (name, version, NVDA compatibility)
   appModules/
     outlook.py          The Outlook app module with the NVDA+shift+r script
+  globalPlugins/
+    replyToSenderOutlook/
+      __init__.py       Starts the update check, which must work outside Outlook
+      updater.py        The GitHub update check, shared by all of joshknnd1982's
+                        add-ons; keep it identical
   doc/
     en/
       readme.html       User documentation bundled with the add-on
@@ -115,6 +130,13 @@ escape and abort the script — that was the cause of the sender lookup
 failing in 0.1.
 
 ## Changelog
+
+### 0.3
+
+* Checks GitHub for updates once a day and offers to install them. To check
+  yourself, choose Tools, Check for add-on updates, Reply to Sender for
+  Microsoft Outlook in the NVDA menu, or press Check for updates now in the
+  add-on's new settings panel.
 
 ### 0.2
 
